@@ -15,7 +15,7 @@ class DBhelper:
     def register(self, name, email, password):
         try:
             self.mycursor.execute("""
-            INSERT INTO `users` (`id`, `name`, `email`, `password`) VALUES (NULL, %s, %s, %s)
+            INSERT INTO `userrs` (`id`, `name`, `email`, `password`) VALUES (NULL, %s, %s, %s)
             """, (name, email, password))
             self.conn.commit()
         except Exception as e:
@@ -26,7 +26,7 @@ class DBhelper:
    
     
     def search(self,email,password):
-        self.mycursor.execute(""" SELECT * FROM `users` WHERE email LIKE '{}' AND password LIKE '{}' 
+        self.mycursor.execute(""" SELECT * FROM `userrs` WHERE email LIKE '{}' AND password LIKE '{}' 
                 """.format(email,password))
      
         data = self.mycursor.fetchall()

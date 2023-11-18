@@ -1,34 +1,56 @@
 import sqlite3
+import sys
 
 class SqliteDBhelper:
-     def connect():
-        conn = sqlite3.connect("flip.db")
-        return conn
-        conn = connect() # call the connect() function
-        cur = conn.cursor() 
-    
+    def __init__(self):
         try:
-            # Execute the SQL statement to create the table
-            cur.execute('''CREATE TABLE IF NOT EXISTS users(
+            self.conn = sqlite3.connect("flip.db")
+            self.cur = self.conn.cursor()
+        except Exception as e:
+            print(f"Error connecting to the database: {e}")
+            sys.exit(1)
+        else:
+            print("Connected to Database")
+
+    def create_users_table(self):
+        try:
+            self.cur.execute('''CREATE TABLE IF NOT EXISTS users(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name TEXT NOT NULL,
                 email TEXT NOT NULL,
+                address TEXT NOT NULL,
                 password TEXT NOT NULL
             )''')
-
-            # Commit the changes to the database
-            conn.commit()
-
-            # If execution is successful, set a variable to indicate that the table is created
-            table_created = True
-
+            self.conn.commit()
         except Exception as e:
-            # If an exception occurs, set the variable to indicate that the table is not created
-            table_created = False
-            print(f"Error: {e}")
+            print(f"Error creating table: {e}")
 
-        # Check if the table is created and print a message accordingly
-        if table_created:
-            print("Table is created")
+    def register(self, name, email, address, password):
+        try:
+            self.cur.execute("""
+            INSERT INTO users (id, name, email, address, password) VALUES (NULL, ?, ?, ?,?)
+            """, (name, email,address, password))
+            self.conn.commit()
+        except Exception as e:
+            print(f"Error during registration: {e}")
+            return -1
         else:
-            print("Table creation failed") 
+            return 1
+
+    def search(self, email, password):
+        self.cur.execute("""
+            SELECT * FROM users WHERE email = ? AND password = ?
+        """, (email, password))
+        data = self.cur.fetchall()
+        return data
+
+    def close_connection(self):
+        self.conn.close()
+
+# Example usage:
+# db_helper = SqliteDBhelper()
+# db_helper.create_users_table()
+# response = db_helper.register("John Doe", "john@example.com", "password123")
+# data = db_helper.search("john@example.com", "password123")
+# print("Data:", data)
+# db_helper.close_connection()

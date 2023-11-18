@@ -44,13 +44,4 @@ class SqliteDBhelper:
         data = self.cur.fetchall()
         return data
 
-    def close_connection(self):
-        self.conn.close()
-
-# Example usage:
-# db_helper = SqliteDBhelper()
-# db_helper.create_users_table()
-# response = db_helper.register("John Doe", "john@example.com", "password123")
-# data = db_helper.search("john@example.com", "password123")
-# print("Data:", data)
-# db_helper.close_connection()
+ 

@@ -3,14 +3,14 @@ import sys
 
 class SqliteDBhelper:
     def __init__(self):
-        try:
-            self.conn = sqlite3.connect("flip.db")
-            self.cur = self.conn.cursor()
-        except Exception as e:
-            print(f"Error connecting to the database: {e}")
-            sys.exit(1)
-        else:
-            print("Connected to Database")
+        self.conn = None
+        self.cur = None
+        self.connect()
+
+    def connect(self):
+        self.conn = sqlite3.connect("flip.db")
+        self.cur = self.conn.cursor()
+        self.create_users_table()
 
     def create_users_table(self):
         try:
@@ -18,17 +18,18 @@ class SqliteDBhelper:
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name TEXT NOT NULL,
                 email TEXT NOT NULL,
-                address TEXT NOT NULL,
+                gender TEXT NOT NULL, 
                 password TEXT NOT NULL
             )''')
             self.conn.commit()
         except Exception as e:
             print(f"Error creating table: {e}")
 
+
     def register(self, name, email, address, password):
         try:
             self.cur.execute("""
-            INSERT INTO users (id, name, email, address, password) VALUES (NULL, ?, ?, ?,?)
+            INSERT INTO users (id, name, email,gender, password) VALUES (NULL, ?, ?, ?,?)
             """, (name, email,address, password))
             self.conn.commit()
         except Exception as e:

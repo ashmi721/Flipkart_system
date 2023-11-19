@@ -14,7 +14,8 @@ class FlipkartSystem:
       user_input = input("""
         1 . Enter 1 to register
         2 . Enter 2 to login
-        3 . Anything else to leave
+        3 . Browse Prodcuts
+        4 . Anything else to leave
         Enter your choice:
               """)    
       
@@ -23,17 +24,21 @@ class FlipkartSystem:
       elif user_input == "2":
           self.user_data = self.login()
           self.user_menu()
+      elif user_input == "3":
+          self. browse_categories()    
+      elif user_input == "4":
+          sys.exit(1000)  
       else:
-          sys.exit(1000)          
-      
+          print("Invalid choice. Please enter a valid option.")            
+          self.menu()
               
       
     def register(self):
-        name = input("Enter the name:")
-        email = input("Enter the email:")
-        address = input("Enter the address:")
-        password = input("Enter the password:")
-        response = self.db.register(name,address,email,password)
+        name = input("Enter name:")
+        email = input("Enter email:")
+        gender = input("Enter gender:")
+        password = input("Enter password:")
+        response = self.db.register(name,email,gender,password)
         
         if response :
             print("Registration successful")
@@ -53,7 +58,27 @@ class FlipkartSystem:
         else:
              print("Hello",data[0][1])   
              return data[0]
-    
+        
+    def browse_categories(self):
+            print("Available Categories:")
+            categories = ["Electronics", "Clothing", "Books", "Home Appliances"]
+            for i, category in enumerate(categories, start=1):
+                print(f"{i}. {category}")
+
+            category_choice = input("Select a category (enter the number): ")
+
+            try:
+                category_choice = int(category_choice)
+                if 1 <= category_choice <= len(categories):
+                    self.selected_category = categories[category_choice - 1]
+                    print(f"You selected the {self.selected_category} category.")
+                else:
+                    print("Invalid category selection.")
+            except ValueError:
+                print("Invalid input. Please enter a number.")
+
+            self.profile()
+        
     def user_menu(self):
         login_input = input("""
         1 . Enter 1 to see profile
@@ -80,7 +105,7 @@ class FlipkartSystem:
             print("User Profile:")
             print("Name:",self.user_data[1])
             print("Email:",self.user_data[2])
-            print("Address:",self.user_data[3])
+            print("Gender:",self.user_data[3])
             self.user_menu()
         else:
             print("User not logged in.")
@@ -98,5 +123,6 @@ class FlipkartSystem:
         
         self.user_data = None
         print("Logged out successfully.") 
-        self.menu()              
+        self.menu() 
+                     
 obj = FlipkartSystem()                           

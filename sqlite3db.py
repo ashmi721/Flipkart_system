@@ -46,3 +46,14 @@ class SqliteDBhelper:
         return data
 
  
+    def delete_user(self,user_id):
+        try:
+            self.cur.execute("""
+                    DELETE FROM users WHERE id = ?        
+                            
+                """,(user_id,))
+            self.conn.commit()
+            return True
+        except Exception as e:
+            print(f"Error deleting user:{e}")    
+            return False

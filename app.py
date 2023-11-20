@@ -115,12 +115,21 @@ class FlipkartSystem:
     #     # Implement profile update logic
     #     pass
     
-    # def delete(self):
-    #     # Implement profile deletion logic
-    #     pass
-    
-    def logout(self):
+    def delete(self):
+        if self.user_data:
+            user_id = self.user_data[0]
+            if self.db.delete_user(user_id):
+                print("Delete account successfully.")
+               
+            else:
+                print("Unable to delete account.")
+        else:
+            print("User not logged in.")
         
+        self.menu()       
+                
+            
+    def logout(self):    
         self.user_data = None
         print("Logged out successfully.") 
         self.menu() 

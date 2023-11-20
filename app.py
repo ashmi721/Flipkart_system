@@ -86,11 +86,10 @@ class FlipkartSystem:
         3 . Enter 3 to delete profile
         4 . Enter 4 to logout
         Enter your choice:
-              """) 
-        
+              """)  
         if login_input =="1":
             self.profile()
-        elif login_input == "2":
+        elif login_input =="2":
             self.update()
         elif login_input =="3":
             self.delete()
@@ -111,16 +110,29 @@ class FlipkartSystem:
             print("User not logged in.")
             self.menu()
     
-    # def update(self):
-    #     # Implement profile update logic
-    #     pass
-    
+    def update(self):
+        if self.user_data:
+            user_id = self.user_data[0]
+            new_name=input("Enter your new name: ")
+            new_email=input("Enter your new email: ")
+            new_gender=input("Enter your new gender: ")
+             
+            if self.db.update_user(user_id,new_name,new_email,new_gender):
+                print("Update successful!")
+                
+            else:
+                print("Unable to update user.")
+        else:
+            print("User not logged in.")     
+        self.user_menu()    
+        
+               
     def delete(self):
         if self.user_data:
             user_id = self.user_data[0]
             if self.db.delete_user(user_id):
                 print("Delete account successfully.")
-               
+                
             else:
                 print("Unable to delete account.")
         else:

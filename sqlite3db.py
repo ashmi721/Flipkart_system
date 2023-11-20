@@ -44,8 +44,19 @@ class SqliteDBhelper:
         """, (email, password))
         data = self.cur.fetchall()
         return data
-
- 
+    def update_user(self, user_id, new_name, new_email, new_gender):
+            try:
+                self.cur.execute("""
+                    UPDATE users 
+                    SET name = ?, email = ?, gender = ? 
+                    WHERE id = ?
+                """, (new_name, new_email, new_gender, user_id))
+                self.conn.commit()
+                return True
+            except Exception as e:
+                print(f"Error updating user: {e}")
+                return False    
+        
     def delete_user(self,user_id):
         try:
             self.cur.execute("""

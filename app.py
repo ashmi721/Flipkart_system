@@ -118,8 +118,7 @@ class FlipkartSystem:
             new_gender=input("Enter your new gender: ")
              
             if self.db.update_user(user_id,new_name,new_email,new_gender):
-                print("Update successful!")
-                
+                print("Update successful!")    
             else:
                 print("Unable to update user.")
         else:
@@ -131,13 +130,11 @@ class FlipkartSystem:
         if self.user_data:
             user_id = self.user_data[0]
             if self.db.delete_user(user_id):
-                print("Delete account successfully.")
-                
+                print("Delete account successfully.")    
             else:
                 print("Unable to delete account.")
         else:
-            print("User not logged in.")
-        
+            print("User not logged in.")    
         self.menu()       
                 
             

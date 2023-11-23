@@ -34,3 +34,22 @@ class DBhelper:
         
         return data
                  
+                 
+    def update_user(self,user_id,new_name,new_email):
+        try:
+            self.mycursor.execute("""
+                                UPDATE userrs SET name=?,email=? WHERE id =?
+                                """,(new_name,new_email))  
+            self.conn.commit()
+        except Exception as e:
+            print(f"Error during registration: {e}")                 
+            
+    def delete_user(self,user_id):
+        try:
+            self.mycursor.execute("""
+                                  DELETE FROM users WHERE id =?
+                                  """,(user_id))        
+            self.conn.commit()
+        except Exception as e:
+            print(f"Error during registration: {e}")                 
+            

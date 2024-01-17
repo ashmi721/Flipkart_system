@@ -24,12 +24,12 @@ The Flipkart System is a simple command-line application that simulates user reg
    ```bash
    git clone https://github.com/your-username/flipkart-system.git
    ```
-2. ** Install the required dependencies:**
+2. Install the required dependencies:
 
    ```bash
    pip install -r requirements.txt
    ```
-3. ** Set up the MySQL database by executing the provided SQL script:**
+3. Set up the MySQL database by executing the provided SQL script:
 
    ```bash
    mysql -u your-username -p < database_setup.sql
@@ -41,9 +41,9 @@ The Flipkart System is a simple command-line application that simulates user reg
    ```bash
    python app.py
    ```
-2. ** Follow the on-screen prompts to register or log in. **
+2. Follow the on-screen prompts to register or log in. 
 
-3. ** Navigate through the menu options to manage your profile.**
+3. Navigate through the menu options to manage your profile.
 
 ## Contributing
 
